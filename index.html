@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="cipher - Real connection for Gen Z. Completely anonymous.">
+  <title>cipher - Anonymous Connection Platform</title>
+  
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage.js"></script>
+  
+  <link rel="stylesheet" href="css/shared.css">
+  <link rel="stylesheet" href="css/landing.css">
+</head>
+<body>
+  <div id="intro-container"></div>
+  <div id="landing-page" class="landing-hidden">
+    <!-- Navigation -->
+    <nav class="nav">
+      <div class="nav-logo">cipher</div>
+      <div class="nav-links">
+        <a href="#how-it-works" class="nav-link">How It Works</a>
+        <a href="#security" class="nav-link">Security</a>
+        <a href="#about" class="nav-link">About</a>
+      </div>
+      <button class="nav-signin-btn" onclick="navigateToApp()">Sign In</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1 class="hero-headline">
+        SHARE YOUR TRUTH.<br>
+        STAY COMPLETELY<br>
+        ANONYMOUS.
+      </h1>
+      <p class="hero-subtext">
+        Connect with people who understand your struggles. Real confessions. Real conversations. Zero identity risk.
+      </p>
+    </section>
+
+    <!-- Feature Cards -->
+    <section class="features">
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3 class="feature-title">Strictly Anonymous</h3>
+        <p class="feature-desc">Your identity is completely secure. No personal data stored. Zero tracking.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3 class="feature-title">Real Connections</h3>
+        <p class="feature-desc">Connect with people who truly understand. Matched based on shared struggles, not profiles.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <h3 class="feature-title">Honest Conversations</h3>
+        <p class="feature-desc">Without the pressure of identity, real people share real feelings. Real connection happens.</p>
+      </div>
+    </section>
+
+    <!-- Frequency Section -->
+    <section class="frequencies" id="how-it-works">
+      <h2 class="section-title">Connect Over Your Struggle</h2>
+      <div class="frequency-cards">
+        <div class="freq-card">
+          <div class="freq-icon">🔥</div>
+          <h3>The Burnt Out</h3>
+          <p>Exhausted. Overwhelmed. Drowning in obligations.</p>
+        </div>
+        <div class="freq-card">
+          <div class="freq-icon">💔</div>
+          <h3>The Broken</h3>
+          <p>Hurt. Betrayed. Searching for healing.</p>
+        </div>
+        <div class="freq-card">
+          <div class="freq-icon">🌀</div>
+          <h3>The Lost</h3>
+          <p>Confused. No identity. Still searching.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+      <h2 class="section-title">How It Works</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h4>Verify Phone</h4>
+          <p>Real Safaricom OTP verification. Phone deleted immediately. Total privacy.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h4>Choose Struggle</h4>
+          <p>Select your frequency. This unlocks your community. Permanent choice for authenticity.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h4>Share Anonymously</h4>
+          <p>Post confessions, answer questions, connect with others. Completely anonymous. Always.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <h4>Get Matched</h4>
+          <p>AI matches you with people who understand. Private video chats. Real connection.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Security Section -->
+    <section class="security" id="security">
+      <h2 class="section-title">Your Privacy is Sacred</h2>
+      <div class="security-features">
+        <div class="security-item">
+          <span class="security-check">✓</span>
+          <p><strong>Zero Data Storage:</strong> Phone number deleted after OTP verification. We never store it.</p>
+        </div>
+        <div class="security-item">
+          <span class="security-check">✓</span>
+          <p><strong>No Profiles:</strong> Only Anonymous ID + Gender + Frequency visible. Nothing else.</p>
+        </div>
+        <div class="security-item">
+          <span class="security-check">✓</span>
+          <p><strong>Anonymity Enforcement:</strong> AI filters block any personal info (names, handles, emails, numbers).</p>
+        </div>
+        <div class="security-item">
+          <span class="security-check">✓</span>
+          <p><strong>No Identity Leaks:</strong> Video calls have face pixelation. Messages are filtered for identifiers.</p>
+        </div>
+        <div class="security-item">
+          <span class="security-check">✓</span>
+          <p><strong>Optional Reveal:</strong> After Hold connection, you CAN reveal identity by buying Sheltorani perfume.</p>
+        </div>
+        <div class="security-item">
+          <span class="security-check">✓</span>
+          <p><strong>End-to-End Encryption:</strong> All Hold chats are encrypted. Auto-delete after 24hrs if unread.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+      <h2 class="cta-headline">READY TO BE YOURSELF?</h2>
+      <p class="cta-subtext">Join thousands of people having real conversations without judgment. Without fear of exposure.</p>
+      <button class="btn-primary" onclick="navigateToApp()">Get Started Now</button>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2026 cipher. Real connection for Gen Z. Completely anonymous. Zero judgment.</p>
+    </footer>
+  </div>
+
+  <script src="js/landing.js"></script>
+</body>
+</html>
