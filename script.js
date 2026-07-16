@@ -1,213 +1,189 @@
-// Local Database Simulator (In-Memory for static testing before Firebase binding)
-const database = {
+// Local In-Memory Database Simulator (Updates live in memory)
+const dbSim = {
     confessions: [
-        { id: 1, frequency: "Burnt Out", author: "Anonymous Male", text: "I have been running three side hustles alongside my 9-5 job in Nairobi. I haven't slept more than 4 hours in two months. I feel like I am collapsing.", replies: 12, time: "2h ago" },
-        { id: 2, frequency: "Lost", author: "Anonymous Female", text: "Finished my degree last year but still nothing. I sit in my house every day wondering if things will ever change.", replies: 8, time: "4h ago" },
-        { id: 3, frequency: "Broken", author: "Anonymous Male", text: "We were together 6 years. She left without a single word and blocked me everywhere. I can't find closure.", replies: 24, time: "1d ago" }
+        { id: 1, frequency: "Burnt Out", author: "Anonymous Male", text: "Working 14-hour days in Westlands, Nairobi. Feels like I am just existing to pay rent. Unbelievable burnout.", replies: 12, time: "2h ago" },
+        { id: 2, frequency: "Lost", author: "Anonymous Female", text: "Finished high school but still don't know what career path is for me. My family expects so much.", replies: 3, time: "4h ago" },
+        { id: 3, frequency: "Broken", author: "Anonymous Male", text: "She blocked me everywhere after 4 years of a perfect relationship. I cannot heal.", replies: 28, time: "1d ago" }
     ],
     explanations: [],
-    matchedUsers: []
+    chats: []
 };
 
-// Kenyan Names and Anonymity Filter Wordlists
-const forbiddenWords = [
-    // Kenyan Names
-    "kamau", "mwangi", "njeri", "otieno", "onyango", "omondi", "odhiambo", "kiprop", "chepngetich", "cheruiyot", 
-    "wafula", "nekesa", "nafula", "wambui", "maina", "nduta", "mugo", "kariuki", "karanja", "nyambura",
-    // Common Social Media / Contact items
-    "whatsapp", "instagram", "tiktok", "facebook", "snapchat", "telegram", "fb", "ig", "number", "simu",
-    // Sheng & Swahili exposure triggers
-    "namba", "nipigie", "mchezo", "jina", "unaitwa"
+// Kenyan Names and Anonymity Filters (Blocking Swahili, Sheng, and Identity handles)
+const restrictedWords = [
+    "kamau", "mwangi", "njeri", "otieno", "onyango", "omondi", "odhiambo", "wafula", 
+    "wambui", "maina", "karanja", "nyambura", "whatsapp", "instagram", "tiktok", "facebook", 
+    "snapchat", "telegram", "fb", "ig", "namba", "nipigie", "unaitwa", "simu", "jina"
 ];
 
 // App State
-let userState = {
-    isAuthenticated: false,
+let appState = {
     phone: "",
     gender: "",
     frequency: ""
 };
 
-// 1. CINEMATIC INTRO CONTROLLER
-window.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => {
-        const intro = document.getElementById('cinematic-intro');
-        const mainApp = document.getElementById('app-container');
-        
-        intro.style.opacity = '0';
-        mainApp.classList.remove('hidden');
-        
-        setTimeout(() => {
-            intro.style.display = 'none';
-        }, 1500);
-    }, 4500); // 4.5 seconds intro sequence
-});
-
-// Navigation Utility
+// Pure JavaScript SPA Navigation Controller
 function navigateTo(pageId) {
-    document.querySelectorAll('.view-section').forEach(view => {
-        view.classList.add('hidden');
+    document.querySelectorAll('.view-section').forEach(section => {
+        section.classList.add('hidden');
     });
     document.getElementById(pageId).classList.remove('hidden');
 }
 
-// 2. PHONE AUTHENTICATION & OTP
+// 1. VERIFICATION FLOW
 function sendOTP() {
-    const phone = document.getElementById('phone-number').value;
-    if (phone.length < 9) {
-        alert("Please enter a valid Kenyan Safaricom/Airtel number.");
+    const phoneInput = document.getElementById('phone-number').value;
+    if (phoneInput.length < 9) {
+        alert("Please enter a valid Kenyan Safaricom or Airtel number.");
         return;
     }
-    userState.phone = "+254" + phone;
+    appState.phone = "+254" + phoneInput;
     document.getElementById('phone-input-group').classList.add('hidden');
     document.getElementById('otp-input-group').classList.remove('hidden');
 }
 
 function verifyOTP() {
-    // Standard mock verification of whatever code
-    userState.isAuthenticated = true;
     navigateTo('onboarding-page');
 }
 
-// 3. ONBOARDING
-function selectGender(gender) {
-    userState.gender = gender;
-    document.querySelectorAll('.gender-btn').forEach(btn => {
-        btn.classList.remove('selected');
-        if(btn.innerText.includes(gender)) btn.classList.add('selected');
-    });
-    checkOnboardingReady();
+// 2. ONBOARDING
+function selectGender(g) {
+    appState.gender = g;
+    document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('selected'));
+    document.getElementById(g === 'Male' ? 'gender-male' : 'gender-female').classList.add('selected');
+    checkOnboardStatus();
 }
 
-function selectFrequency(freq) {
-    userState.frequency = freq;
-    document.querySelectorAll('.freq-option-card').forEach(card => {
-        card.classList.remove('selected');
-        if(card.innerText.includes(freq)) card.classList.add('selected');
-    });
-    checkOnboardingReady();
+function selectFrequency(f) {
+    appState.frequency = f;
+    document.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('selected'));
+    
+    if (f === 'Burnt Out') document.getElementById('freq-burnt').classList.add('selected');
+    if (f === 'Broken') document.getElementById('freq-broken').classList.add('selected');
+    if (f === 'Lost') document.getElementById('freq-lost').classList.add('selected');
+    
+    checkOnboardStatus();
 }
 
-function checkOnboardingReady() {
-    if (userState.gender && userState.frequency) {
+function checkOnboardStatus() {
+    if (appState.gender && appState.frequency) {
         document.getElementById('btn-complete-onboarding').removeAttribute('disabled');
     }
 }
 
 function completeOnboarding() {
-    document.getElementById('current-user-frequency').innerText = userState.frequency;
+    document.getElementById('user-freq-tag').innerText = appState.frequency;
     navigateTo('dashboard-page');
-    renderConfessions();
+    renderFeed();
 }
 
-// 4. ANONYMITY SCANNER (The system filters out identifying language)
-function checkAnonymityViolation(text) {
-    const sanitizedInput = text.toLowerCase().replace(/[^\w\s]/gi, '');
-    const words = sanitizedInput.split(/\s+/);
+// 3. ANONYMITY SCANNER AND COMPOSER
+function checkTextAnonymity(str) {
+    const safeStr = str.toLowerCase().replace(/[^\w\s]/gi, '');
+    const words = safeStr.split(/\s+/);
     
-    // Check for phone number patterns
-    const phonePattern = /(07\d{8}|01\d{8}|\+254\d{9})/g;
-    if(phonePattern.test(text)) {
-        return "System Warning: Phone numbers are strictly prohibited on Cipher to ensure your anonymity.";
+    // Check for phone numbers
+    const numRegex = /(07\d{8}|01\d{8}|\+254\d{9})/g;
+    if (numRegex.test(str)) {
+        return "Warning: Sharing phone numbers violates Cipher rules and is blocked.";
     }
 
-    // Check for specific forbidden identifier keywords
     for (let word of words) {
-        if (forbiddenWords.includes(word)) {
-            return `System Warning: Identifying words or platform names ("${word}") are blocked to protect your identity.`;
+        if (restrictedWords.includes(word)) {
+            return `Warning: Sharing identifiers ("${word}") is not allowed to keep you safe.`;
         }
     }
     return null;
 }
 
-// 5. CONFESSIONS LOGIC
-function submitConfession() {
-    const text = document.getElementById('confession-text').value;
-    const warningBox = document.getElementById('warning-box');
+function submitPost() {
+    const postBox = document.getElementById('post-text-input');
+    const txt = postBox.value;
+    const errBox = document.getElementById('filter-error-msg');
 
-    const violation = checkAnonymityViolation(text);
-    if(violation) {
-        warningBox.innerText = violation;
-        warningBox.classList.remove('hidden');
+    const violation = checkTextAnonymity(txt);
+    if (violation) {
+        errBox.innerText = violation;
+        errBox.classList.remove('hidden');
         return;
     }
 
-    warningBox.classList.add('hidden');
-    
+    errBox.classList.add('hidden');
+
     const newConf = {
-        id: database.confessions.length + 1,
-        frequency: userState.frequency,
-        author: `Anonymous ${userState.gender}`,
-        text: text,
+        id: dbSim.confessions.length + 1,
+        frequency: appState.frequency,
+        author: `Anon (${appState.gender === 'Male' ? '♂' : '♀'})`,
+        text: txt,
         replies: 0,
         time: "Just now"
     };
 
-    database.confessions.unshift(newConf);
-    document.getElementById('confession-text').value = '';
-    renderConfessions();
+    dbSim.confessions.unshift(newConf);
+    postBox.value = '';
+    renderFeed();
+
+    setTimeout(() => {
+        triggerAutomaticMatch();
+    }, 1200);
 }
 
-function renderConfessions() {
-    const filter = document.getElementById('feed-freq-filter').value;
-    const feed = document.getElementById('confessions-list');
-    feed.innerHTML = '';
+function renderFeed() {
+    const currentFilter = document.getElementById('feed-filter').value;
+    const targetDiv = document.getElementById('feed-list');
+    targetDiv.innerHTML = '';
 
-    const filtered = database.confessions.filter(c => filter === 'All' || c.frequency === filter);
+    const listToRender = dbSim.confessions.filter(item => currentFilter === 'All' || item.frequency === currentFilter);
 
-    filtered.forEach(c => {
-        feed.innerHTML += `
-            <div class="conf-card">
-                <div class="conf-header">
-                    <span class="badge ${c.frequency.toLowerCase().replace(' ', '-')}">${c.frequency}</span>
-                    <span class="conf-meta">${c.author} • ${c.time}</span>
+    listToRender.forEach(c => {
+        targetDiv.innerHTML += `
+            <div class="card-confession">
+                <div class="card-meta">
+                    <span class="card-freq">${c.frequency}</span>
+                    <span class="card-auth">${c.author} • ${c.time}</span>
                 </div>
-                <p class="conf-body">${c.text}</p>
-                <div class="conf-actions">
-                    <button class="action-btn" onclick="openReplyModal(${c.id})">💬 Reply Directly (${c.replies})</button>
-                    <button class="action-btn" onclick="triggerAutomaticMatch()">⚡ System Match Mindset</button>
+                <div class="card-body">${c.text}</div>
+                <div class="card-actions">
+                    <button class="act-btn" onclick="triggerAutomaticMatch()">⚡ Direct Match</button>
+                    <button class="act-btn">💬 Reply (${c.replies})</button>
                 </div>
             </div>
         `;
     });
 }
 
-// 6. SENSITIVE Q&A & SYSTEM MATCHING LOGIC
-function answerQuestion(choice) {
-    document.querySelectorAll('.opt-btn').forEach(btn => {
-        btn.classList.remove('selected');
-        if(btn.innerText === choice) btn.classList.add('selected');
+// 4. Q&A FUNCTIONALITY
+function chooseQuestionAnswer(choice) {
+    document.querySelectorAll('.ans-opt').forEach(opt => {
+        opt.style.borderColor = 'var(--border-glow)';
+        if(opt.innerText === choice) opt.style.borderColor = 'var(--accent-green)';
     });
-    document.getElementById('answer-explanation-box').classList.remove('hidden');
+    document.getElementById('explanation-box').classList.remove('hidden');
 }
 
 function submitExplanation() {
-    const explanation = document.getElementById('explanation-text').value;
-    const violation = checkAnonymityViolation(explanation);
-    if(violation) {
+    const input = document.getElementById('explanation-input').value;
+    const violation = checkTextAnonymity(input);
+    if (violation) {
         alert(violation);
         return;
     }
 
-    database.explanations.push({
-        frequency: userState.frequency,
-        gender: userState.gender,
-        text: explanation
+    dbSim.explanations.push({
+        text: input,
+        gender: appState.gender
     });
 
-    document.getElementById('explanation-text').value = '';
-    document.getElementById('answer-explanation-box').classList.add('hidden');
-    
-    // Automatically trigger system match simulator based on complimentary vectors
-    setTimeout(() => {
-        triggerAutomaticMatch();
-    }, 1500);
+    document.getElementById('explanation-input').value = '';
+    document.getElementById('explanation-box').classList.add('hidden');
+    triggerAutomaticMatch();
 }
 
-// Automatic Mindset Matching Mechanism
+// 5. AUTOMATIC MATCHING MECHANISM
 function triggerAutomaticMatch() {
-    const matchGender = userState.gender === 'Male' ? 'Female' : 'Male';
-    document.getElementById('matched-gender').innerText = `Anon ${matchGender}`;
+    const calculatedGender = appState.gender === 'Male' ? 'Female' : 'Male';
+    document.getElementById('matched-target-gender').innerText = `Anon (${calculatedGender})`;
     document.getElementById('match-modal').classList.remove('hidden');
 }
 
@@ -215,74 +191,69 @@ function closeMatchModal() {
     document.getElementById('match-modal').classList.add('hidden');
 }
 
-function initiateHold() {
-    alert("Initiating Safaricom M-Pesa Request... Pay 50 KES to lock this Hold for 7 days.");
+function activateHold() {
+    alert("Requesting secure MPESA push... Pay 50 KES to activate Hold.");
     closeMatchModal();
-    // Simulate active chat channel initiation
-    switchDashTab('chats');
-    renderActiveChats();
+    switchTab('chats');
+    renderChats();
 }
 
-// 7. HOLDS & DM SCREEN
-function switchDashTab(tab) {
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.add('hidden'));
+// 6. DASHBOARD TAB AND CHAT SYSTEM
+function switchTab(tab) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
 
-    // Highlight target button
-    event.target.classList.add('active');
-    document.getElementById(`tab-content-${tab}`).classList.remove('hidden');
+    document.getElementById(`tab-btn-${tab}`).classList.add('active');
+    document.getElementById(`panel-${tab}`).classList.remove('hidden');
 }
 
-function renderActiveChats() {
-    const list = document.getElementById('active-holds-list');
-    list.innerHTML = `
-        <div class="chat-item" onclick="openPrivateChat('Anonymous Girl 🌿')">
-            <h4>Anonymous Girl 🌿</h4>
-            <p style="font-size: 0.75rem; color: var(--text-muted);">Hold expires in 7 days</p>
+function renderChats() {
+    const target = document.getElementById('connections-list');
+    target.innerHTML = `
+        <div style="padding: 0.8rem; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent-green); border-radius: 8px; cursor: pointer;" onclick="openPrivateMessage()">
+            <h4>Active Vibe Hold</h4>
+            <p style="font-size: 0.7rem; color: var(--text-dim);">Hold Active: 7 Days Remaining</p>
         </div>
     `;
 }
 
-function openPrivateChat(name) {
-    const win = document.getElementById('active-chat-window');
-    win.innerHTML = `
-        <div style="padding: 1.5rem; background-color: var(--bg-card); display: flex; justify-content: space-between;">
-            <div>
-                <h4>${name}</h4>
-                <p style="font-size: 0.75rem; color: var(--accent-emerald);">Secure Hold Active</p>
-            </div>
-            <button class="btn-signin" style="font-size: 0.75rem;" onclick="revealIdentity()">Buy Sheltorani Perfume to Reveal (300 KES)</button>
+function openPrivateMessage() {
+    const windowDiv = document.getElementById('active-chat-window');
+    windowDiv.innerHTML = `
+        <div style="padding: 1rem; border-bottom: 1px solid var(--border-glow); background: var(--bg-card); display: flex; justify-content: space-between;">
+            <h4>Anonymous Match</h4>
+            <button style="background: var(--accent-green); border: none; padding: 0.3rem 0.8rem; font-weight: 700; border-radius: 4px;" onclick="revealIdentity()">Get Sheltorani Perfume to Reveal (300 KES)</button>
         </div>
-        <div style="flex-grow: 1; padding: 1.5rem; display: flex; flex-direction: column; justify-content: flex-end;" id="msg-history">
-            <p style="text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 2rem;">🔒 Messages are encrypted and deleted completely when Hold expires.</p>
-            <div style="align-self: flex-start; background-color: var(--bg-card); padding: 0.75rem; border-radius: 8px; margin-bottom: 1rem;">
-                Hey! Your explanation on today's question was so deep. I feel the exact same way.
+        <div style="flex-grow: 1; padding: 1rem; display: flex; flex-direction: column; justify-content: flex-end;" id="chat-messages">
+            <div style="align-self: flex-start; background: var(--bg-card); padding: 0.8rem; border-radius: 8px; margin-bottom: 0.5rem; max-width: 80%;">
+                Hey! Your thoughts in today's section matched perfectly with mine. Real vibe here.
             </div>
         </div>
-        <div style="padding: 1rem; background-color: var(--bg-card); display: flex; gap: 0.5rem;">
-            <input type="text" placeholder="Type a secure reply..." style="background-color: var(--bg-deep); border-radius: 8px;" id="chat-input-box">
-            <button class="btn-submit-post" style="padding: 0.5rem 1rem;" onclick="sendPrivateMsg()">Send</button>
+        <div style="padding: 1rem; display: flex; gap: 0.5rem; background: var(--bg-card);">
+            <input type="text" id="chat-send-input" placeholder="Type a message...">
+            <button style="background: var(--accent-green); color: black; border: none; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 700;" onclick="sendPrivateMsg()">Send</button>
         </div>
     `;
 }
 
 function sendPrivateMsg() {
-    const text = document.getElementById('chat-input-box').value;
-    const violation = checkAnonymityViolation(text);
-    if(violation) {
+    const val = document.getElementById('chat-send-input').value;
+    const violation = checkTextAnonymity(val);
+    if (violation) {
         alert(violation);
         return;
     }
-    const box = document.getElementById('msg-history');
-    box.innerHTML += `
-        <div style="align-self: flex-end; background-color: var(--accent-emerald); padding: 0.75rem; border-radius: 8px; margin-bottom: 1rem;">
-            ${text}
+
+    const messages = document.getElementById('chat-messages');
+    messages.innerHTML += `
+        <div style="align-self: flex-end; background: var(--accent-green); color: black; padding: 0.8rem; border-radius: 8px; margin-bottom: 0.5rem; max-width: 80%;">
+            ${val}
         </div>
     `;
-    document.getElementById('chat-input-box').value = '';
+    document.getElementById('chat-send-input').value = '';
 }
 
 function revealIdentity() {
-    alert("Ordering Sheltorani Perfume for 300 KES. Upon delivery notification, your real credentials will be securely shared with each other.");
-}
-  
+    alert("Requesting 300 KES transaction to unlock Sheltorani Perfume & exchange contact channels.");
+        }
+        
