@@ -1,0 +1,401 @@
+/* ==========================================
+   CIPHER - Landing Page CSS
+   ========================================== */
+
+/* CINEMATIC INTRO */
+.cinematic-intro {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeOut 0.5s ease-in-out 5.5s forwards;
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.intro-content {
+  text-align: center;
+  color: var(--silver);
+}
+
+.intro-text-1, .intro-text-2, .intro-text-3, .intro-text-4 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.5px;
+  opacity: 0;
+  margin-bottom: 20px;
+}
+
+.intro-text-1.fade-in,
+.intro-text-2.fade-in,
+.intro-text-3.fade-in {
+  animation: fadeIn 0.8s ease-in-out forwards;
+}
+
+.intro-text-4.fade-in-cipher {
+  animation: fadeInCipher 1s ease-in-out forwards;
+}
+
+@keyframes fadeInCipher {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.intro-divider {
+  width: 60px;
+  height: 2px;
+  background-color: var(--teal);
+  margin: 30px auto;
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: center;
+}
+
+.intro-divider.expand {
+  animation: expandDivider 0.6s ease-in-out forwards;
+}
+
+@keyframes expandDivider {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+.landing-hidden {
+  display: none;
+}
+
+/* NAVIGATION */
+.nav {
+  height: 70px;
+  background-color: var(--charcoal);
+  border-bottom: 2px solid var(--dark-teal);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-logo {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: var(--teal);
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+}
+
+.nav-link {
+  color: var(--silver);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: color 200ms;
+}
+
+.nav-link:hover {
+  color: var(--teal);
+}
+
+.nav-signin-btn {
+  background-color: transparent;
+  color: var(--teal);
+  border: 2px solid var(--teal);
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 200ms;
+}
+
+.nav-signin-btn:hover {
+  background-color: rgba(107, 184, 160, 0.1);
+}
+
+/* HERO SECTION */
+.hero {
+  text-align: center;
+  padding: 80px 40px 60px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hero-headline {
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--silver);
+  margin-bottom: 24px;
+  letter-spacing: -1px;
+}
+
+.hero-subtext {
+  font-size: 18px;
+  color: var(--gray);
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* FEATURES SECTION */
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1100px;
+  margin: 60px auto;
+  padding: 0 40px;
+}
+
+.feature-card {
+  background-color: var(--dark-teal);
+  border: 2px solid var(--teal);
+  border-radius: 16px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  transition: all 300ms ease-in-out;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(107, 184, 160, 0.2);
+}
+
+.feature-icon {
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.feature-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--silver);
+  margin-bottom: 12px;
+}
+
+.feature-desc {
+  font-size: 14px;
+  color: #a8a8a8;
+  line-height: 1.6;
+}
+
+/* FREQUENCIES SECTION */
+.frequencies, .how-it-works, .security {
+  padding: 60px 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--silver);
+  margin-bottom: 48px;
+  letter-spacing: -0.5px;
+}
+
+.frequency-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.freq-card {
+  background-color: var(--dark-teal);
+  border: 1px solid var(--dark-teal);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  transition: all 200ms;
+}
+
+.freq-card:hover {
+  border-color: var(--teal);
+}
+
+.freq-icon {
+  font-size: 40px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.freq-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--silver);
+  margin-bottom: 8px;
+}
+
+.freq-card p {
+  font-size: 13px;
+  color: var(--gray);
+}
+
+/* HOW IT WORKS */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+.step {
+  text-align: center;
+}
+
+.step-number {
+  width: 48px;
+  height: 48px;
+  background-color: transparent;
+  border: 2px solid var(--teal);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--teal);
+  margin: 0 auto 20px;
+}
+
+.step h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--silver);
+  margin-bottom: 8px;
+}
+
+.step p {
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+/* SECURITY SECTION */
+.security-features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.security-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  background-color: var(--dark-teal);
+  border-radius: 8px;
+  align-items: center;
+}
+
+.security-check {
+  color: var(--teal);
+  font-size: 20px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.security-item p {
+  font-size: 14px;
+  color: var(--silver);
+  line-height: 1.5;
+}
+
+/* CTA SECTION */
+.cta {
+  padding: 80px 40px;
+  text-align: center;
+  background-color: var(--charcoal);
+}
+
+.cta-headline {
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--silver);
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+
+.cta-subtext {
+  font-size: 16px;
+  color: var(--gray);
+  margin-bottom: 32px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+/* FOOTER */
+.footer {
+  padding: 32px 40px;
+  text-align: center;
+  border-top: 1px solid var(--dark-teal);
+  background-color: var(--charcoal);
+  color: var(--gray);
+  font-size: 13px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .nav {
+    padding: 0 20px;
+    flex-wrap: wrap;
+    height: auto;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .hero {
+    padding: 40px 20px;
+  }
+
+  .hero-headline {
+    font-size: 32px;
+  }
+
+  .features, .frequency-cards, .steps, .security-features {
+    grid-template-columns: 1fr;
+  }
+
+  .frequencies, .how-it-works, .security {
+    padding: 40px 20px;
+  }
+
+  .section-title {
+    font-size: 24px;
+    margin-bottom: 32px;
+  }
+}
