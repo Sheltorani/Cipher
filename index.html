@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cipher — Share Your Truth. Stay Completely Anonymous.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="cinematic-intro" class="intro-overlay">
+        <div class="intro-content">
+            <p class="intro-sub-brand">SHELTORANI PRESENTS</p>
+            <div class="cipher-logo-container">
+                <h1 class="glitch-logo" data-text="cipher">cipher</h1>
+            </div>
+            <p class="intro-tagline">Truth requires no identity.</p>
+            <div class="scanner-line"></div>
+        </div>
+    </div>
+
+    <div id="app-container" class="hidden">
+
+        <div id="landing-page" class="view-section">
+            <header class="navbar">
+                <div class="container nav-flex">
+                    <div class="brand">
+                        <span class="logo-text">cipher</span>
+                        <span class="sponsor-badge">By Sheltorani</span>
+                    </div>
+                    <nav class="nav-menu">
+                        <a href="#how-it-works">How It Works</a>
+                        <a href="#security">Security</a>
+                        <a href="#about">About</a>
+                        <button class="btn-signin" onclick="navigateTo('auth-page')">Sign In</button>
+                    </nav>
+                </div>
+            </header>
+
+            <main class="hero-section">
+                <div class="container hero-grid">
+                    <div class="hero-content">
+                        <h1 class="main-title">SHARE YOUR TRUTH.<br><span class="highlight">STAY COMPLETELY ANONYMOUS.</span></h1>
+                        <p class="hero-subtitle">Connect with people who understand your struggles. No judgment. No identity. Just real conversations.</p>
+                        
+                        <div class="landing-cards">
+                            <div class="l-card">
+                                <div class="card-icon">🔒</div>
+                                <h4>Strictly Anonymous</h4>
+                                <p>Your identity is completely protected. No names. No phone numbers. Just you and your truth.</p>
+                            </div>
+                            <div class="l-card">
+                                <div class="card-icon">🤝</div>
+                                <h4>Real Connections</h4>
+                                <p>Find people who genuinely understand. Match based on shared struggles, not profiles.</p>
+                            </div>
+                            <div class="l-card">
+                                <div class="card-icon">💬</div>
+                                <h4>Honest Conversations</h4>
+                                <p>Without the pressure of identity, people share what they actually feel. Real connection.</p>
+                            </div>
+                        </div>
+
+                        <div class="hero-cta">
+                            <button class="btn-cta" onclick="navigateTo('auth-page')">Get Started Now</button>
+                        </div>
+                    </div>
+
+                    <div class="hero-visual">
+                        <div class="phone-mockup">
+                            <div class="mockup-header">cipher</div>
+                            <div class="mockup-body">
+                                <div class="confess-stream">
+                                    <div class="stream-item">
+                                        <span class="badge burnt-out">The Burnt Out</span>
+                                        <p>"Working 14 hours a day in Nairobi just to pay rent. I feel like a ghost..."</p>
+                                    </div>
+                                    <div class="stream-item">
+                                        <span class="badge lost">The Lost</span>
+                                        <p>"Everyone my age has life figured out. I'm just drifting."</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <div id="auth-page" class="view-section hidden container-center">
+            <div class="auth-card">
+                <button class="btn-back" onclick="navigateTo('landing-page')">← Back</button>
+                <h2>Sign in to Cipher</h2>
+                <p class="auth-desc">Enter your Kenyan phone number to receive a secure OTP code. Your phone number is strictly used for verification and is never exposed.</p>
+                
+                <div id="phone-input-group">
+                    <div class="input-wrapper">
+                        <span class="prefix">+254</span>
+                        <input type="tel" id="phone-number" placeholder="712345678" maxlength="9">
+                    </div>
+                    <button class="btn-submit" onclick="sendOTP()">Send Verification Code</button>
+                </div>
+
+                <div id="otp-input-group" class="hidden">
+                    <p class="status-msg">OTP sent! Enter the 6-digit code below.</p>
+                    <input type="text" id="otp-code" placeholder="• • • • • •" maxlength="6">
+                    <button class="btn-submit" onclick="verifyOTP()">Verify & Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="onboarding-page" class="view-section hidden container-center">
+            <div class="auth-card wide-card">
+                <h2>Set Up Your Anonymity</h2>
+                <p class="auth-desc">Choose wisely. Your frequency is permanent and defines where you post confessions.</p>
+                
+                <div class="gender-selection">
+                    <label class="section-label">Select Public Gender Identifier:</label>
+                    <div class="gender-options">
+                        <button class="gender-btn" onclick="selectGender('Male')">♂ Male</button>
+                        <button class="gender-btn" onclick="selectGender('Female')">♀ Female</button>
+                    </div>
+                </div>
+
+                <div class="frequency-selection">
+                    <label class="section-label">Select Your Permanent Frequency:</label>
+                    <p class="warning-text">⚠️ This cannot be changed later to prevent chaos.</p>
+                    <div class="freq-grid">
+                        <div class="freq-option-card" onclick="selectFrequency('Burnt Out')">
+                            <h3>🔥 The Burnt Out</h3>
+                            <p>Exhausted. Overwhelmed. Drowning in responsibilities.</p>
+                        </div>
+                        <div class="freq-option-card" onclick="selectFrequency('Broken')">
+                            <h3>💔 The Broken</h3>
+                            <p>Hurt. Betrayed. Finding it hard to heal.</p>
+                        </div>
+                        <div class="freq-option-card" onclick="selectFrequency('Lost')">
+                            <h3>🧭 The Lost</h3>
+                            <p>Confused. Wandering. No identity crisis.</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-submit" id="btn-complete-onboarding" disabled onclick="completeOnboarding()">Enter Cipher</button>
+            </div>
+        </div>
+
+        <div id="dashboard-page" class="view-section hidden">
+            <header class="dash-header">
+                <div class="container dash-nav">
+                    <div class="brand">
+                        <span class="logo-text">cipher</span>
+                        <span class="user-frequency-badge" id="current-user-frequency">Lost</span>
+                    </div>
+                    <div class="dash-tabs">
+                        <button class="tab-btn active" onclick="switchDashTab('confessions')">Confessions</button>
+                        <button class="tab-btn" onclick="switchDashTab('questions')">Sensitive Q&A</button>
+                        <button class="tab-btn" onclick="switchDashTab('chats')">Holds & Matches</button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="container main-dash-layout">
+                <div class="feed-column" id="feed-column-container">
+                    
+                    <div id="tab-content-confessions" class="tab-panel">
+                        <div class="composer-card">
+                            <h3>Share Your Confession Anonymously</h3>
+                            <textarea id="confession-text" placeholder="What's weighing on your mind? Type freely..."></textarea>
+                            <div class="composer-actions">
+                                <button class="btn-voice">🎙️ Record Anonymous Voice Note</button>
+                                <button class="btn-pixel-video">📹 Upload Pixelated Video</button>
+                                <button class="btn-submit-post" onclick="submitConfession()">Publish Confession</button>
+                            </div>
+                            <div id="warning-box" class="warning-alert hidden"></div>
+                        </div>
+
+                        <div class="feed-filters">
+                            <span class="filter-label">Viewing Frequency:</span>
+                            <select id="feed-freq-filter" onchange="renderConfessions()">
+                                <option value="All">All Frequencies</option>
+                                <option value="Burnt Out">🔥 The Burnt Out</option>
+                                <option value="Broken">💔 The Broken</option>
+                                <option value="Lost">🧭 The Lost</option>
+                            </select>
+                        </div>
+
+                        <div class="confessions-feed" id="confessions-list">
+                            </div>
+                    </div>
+
+                    <div id="tab-content-questions" class="tab-panel hidden">
+                        <div class="question-spotlight">
+                            <span class="spotlight-tag">TODAY'S SENSITIVE QUESTION</span>
+                            <h2 id="current-question-text">Have you ever intentionally sabotaged a close friend's relationship out of envy?</h2>
+                            
+                            <div class="question-options">
+                                <button class="opt-btn" onclick="answerQuestion('Yes, and I regret it.')">Yes, and I regret it.</button>
+                                <button class="opt-btn" onclick="answerQuestion('Yes, and I would do it again.')">Yes, and I would do it again.</button>
+                                <button class="opt-btn" onclick="answerQuestion('No, never.')">No, never.</button>
+                            </div>
+
+                            <div id="answer-explanation-box" class="hidden">
+                                <p class="explanation-prompt">Explain your choice to enable matchmaking (Text, Voice, or Pixelated Video):</p>
+                                <textarea id="explanation-text" placeholder="Be brutally honest... Your thoughts will match you with complementary souls."></textarea>
+                                <button class="btn-submit-post" onclick="submitExplanation()">Submit Explanation & Match</button>
+                            </div>
+                        </div>
+
+                        <div class="answers-feed" id="answers-list">
+                            </div>
+                    </div>
+
+                    <div id="tab-content-chats" class="tab-panel hidden">
+                        <div class="chats-layout">
+                            <div class="chats-sidebar">
+                                <h3>Active Holds</h3>
+                                <div class="chats-list" id="active-holds-list">
+                                    </div>
+                            </div>
+                            <div class="chat-window" id="active-chat-window">
+                                <div class="chat-placeholder">
+                                    <p>Select an active Hold connection to open secret, end-to-end private messaging.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="match-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <h2>🔥 Mindset Match!</h2>
+            <p>The system has automatically matched your thoughts with another anonymous soul. You share a complimentary worldview.</p>
+            <div class="match-avatars">
+                <div class="avatar">You</div>
+                <div class="match-heart">⚡</div>
+                <div class="avatar" id="matched-gender">Female</div>
+            </div>
+            <div class="match-options">
+                <button class="btn-hold" onclick="initiateHold()">Initiate 7-Day Hold (50 KES)</button>
+                <button class="btn-close" onclick="closeMatchModal()">Keep Browsing</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
