@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cipher — Truth Requires No Identity</title>
+    <title>Cipher — Spilling Truth</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="theme-default">
 
+    <!-- COLD HARD INTRO -->
     <div id="cinematic-intro" class="intro-overlay">
         <div class="intro-content">
             <p class="intro-sub-brand">SHELTORANI PRESENTS</p>
@@ -22,8 +23,10 @@
         </div>
     </div>
 
+    <!-- MAIN FRAMEWORK -->
     <div id="app-container">
 
+        <!-- LANDING VIEW -->
         <section id="landing-page" class="view-section">
             <header class="navbar">
                 <div class="nav-container">
@@ -36,174 +39,194 @@
             </header>
 
             <main class="hero-container">
-                <h1 class="main-title">SHARE YOUR TRUTH.<br><span class="highlight">STAY ANONYMOUS.</span></h1>
-                <p class="hero-subtitle">Connect with others through raw confessions and sensitive Q&As. No names. No handles. Sponsored by Sheltorani Perfumes.</p>
+                <h1 class="main-title">TUNED TO YOUR<br><span class="highlight">TRUE FREQUENCY.</span></h1>
+                <p class="hero-subtitle">Raw confessions, sensitive Q&As, and private Echoes. Connect without judgment. No profile search. No random hi's. Just real resonance.</p>
                 
                 <div class="hero-actions">
-                    <button class="btn-cta" onclick="navigateTo('auth-page')">Get Started Now</button>
+                    <button class="btn-cta" onclick="navigateTo('auth-page')">Claim Your Aura</button>
                 </div>
 
                 <div class="feature-strip">
-                    <div class="f-item">🔒 Zero Personal Info</div>
-                    <div class="f-item">🔥 3 Safe Frequencies</div>
-                    <div class="f-item">⚡ Mindset Matching</div>
+                    <div class="f-item">⚡ Intentional Echoes</div>
+                    <div class="f-item">🛡️ Context-Only Chats</div>
+                    <div class="f-item">🎚️ Live Frequency Tuning</div>
                 </div>
             </main>
         </section>
 
+        <!-- PHONE OTP VIEW -->
         <section id="auth-page" class="view-section hidden flex-center">
             <div class="glass-card">
                 <button class="btn-back" onclick="navigateTo('landing-page')">← Back</button>
-                <h2>Verify Identity</h2>
-                <p class="card-desc">Enter your Kenyan phone number to get an OTP. Your number is kept strictly confidential and used only for verification.</p>
+                <h2>Gatekeeping Integrity</h2>
+                <p class="card-desc">Cipher uses one-time verification to prevent bot floods. Your mobile details are permanently hashed and inaccessible.</p>
                 
                 <div id="phone-input-group">
                     <div class="input-wrapper">
                         <span class="prefix">+254</span>
                         <input type="tel" id="phone-number" placeholder="712345678" maxlength="9">
                     </div>
-                    <button class="btn-submit" onclick="sendOTP()">Send SMS OTP Code</button>
+                    <button class="btn-submit" onclick="sendOTP()">Request SMS Gatekey</button>
                 </div>
 
                 <div id="otp-input-group" class="hidden">
-                    <p class="status-msg">Verification code sent!</p>
+                    <p class="status-msg">Gatekey sent via SMS</p>
                     <input type="text" id="otp-code" placeholder="• • • • • •" maxlength="6" class="otp-box">
-                    <button class="btn-submit" onclick="verifyOTP()">Verify Code</button>
+                    <button class="btn-submit" onclick="verifyOTP()">Access Cipher</button>
                 </div>
             </div>
         </section>
 
+        <!-- AURA ONBOARDING -->
         <section id="onboarding-page" class="view-section hidden flex-center">
             <div class="glass-card wide">
                 <h2>Define Your Aura</h2>
-                <p class="card-desc">Your selections are permanent. Choose carefully to prevent disruptions on the platform.</p>
+                <p class="card-desc">Aura alignment is permanent. It determines your voice, your environment, and your native community.</p>
                 
                 <div class="onboard-section">
-                    <label class="section-label">Public Gender Symbol</label>
+                    <label class="section-label">Aura Anchor Symbol</label>
                     <div class="gender-grid">
-                        <button class="gender-btn" id="gender-male" onclick="selectGender('Male')">♂ Male</button>
-                        <button class="gender-btn" id="gender-female" onclick="selectGender('Female')">♀ Female</button>
+                        <button class="gender-btn" id="gender-male" onclick="selectGender('Male')">♂ Masculine</button>
+                        <button class="gender-btn" id="gender-female" onclick="selectGender('Female')">♀ Feminine</button>
                     </div>
                 </div>
 
                 <div class="onboard-section">
-                    <label class="section-label">Select Your Permanent Frequency</label>
-                    <p class="sub-alert">⚠️ You cannot change this later. You can only post inside this frequency.</p>
+                    <label class="section-label">Lock Your Native Frequency</label>
+                    <p class="sub-alert">⚠️ Broadcast access will be hardlocked to this channel. Choose where you belong.</p>
                     <div class="freq-grid">
-                        <div class="freq-btn" id="freq-burnt" onclick="selectFrequency('Burnt Out')">
+                        <div class="freq-btn select-burnt" id="freq-burnt" onclick="selectFrequency('Burnt Out')">
                             <h3>🔥 Burnt Out</h3>
-                            <p>Exhausted, working endless hours</p>
+                            <p>Smoldering under corporate/creative exhaustion.</p>
                         </div>
-                        <div class="freq-btn" id="freq-broken" onclick="selectFrequency('Broken')">
+                        <div class="freq-btn select-broken" id="freq-broken" onclick="selectFrequency('Broken')">
                             <h3>💔 Broken</h3>
-                            <p>Healing from unspoken pain</p>
+                            <p>Muted, navigating unspoken grief or healing.</p>
                         </div>
-                        <div class="freq-btn" id="freq-lost" onclick="selectFrequency('Lost')">
+                        <div class="freq-btn select-lost" id="freq-lost" onclick="selectFrequency('Lost')">
                             <h3>🧭 Lost</h3>
-                            <p>Wandering, searching for paths</p>
+                            <p>Ethereal, searching for alignment and direction.</p>
                         </div>
                     </div>
                 </div>
 
-                <button class="btn-submit" id="btn-complete-onboarding" disabled onclick="completeOnboarding()">Enter Cipher</button>
+                <button class="btn-submit" id="btn-complete-onboarding" disabled onclick="completeOnboarding()">Align With Cipher</button>
             </div>
         </section>
 
+        <!-- DASHBOARD CONTAINER -->
         <section id="dashboard-page" class="view-section hidden">
             <header class="dash-navbar">
                 <div class="dash-nav-container">
                     <div class="brand">
                         <span class="logo-text">cipher</span>
-                        <span id="user-freq-tag" class="freq-indicator">Lost</span>
+                        <span id="user-freq-tag" class="freq-indicator">Native</span>
                     </div>
+
+                    <!-- CENTRAL TABS -->
                     <div class="dash-tabs">
-                        <button class="tab-btn active" id="tab-btn-confessions" onclick="switchTab('confessions')">Feed</button>
-                        <button class="tab-btn" id="tab-btn-questions" onclick="switchTab('questions')">Q&A</button>
-                        <button class="tab-btn" id="tab-btn-chats" onclick="switchTab('chats')">Holds</button>
+                        <button class="tab-btn active" id="tab-btn-feed" onclick="switchTab('feed')">Broadcasting</button>
+                        <button class="tab-btn" id="tab-btn-spill" onclick="switchTab('spill')">Spill 🌶️</button>
+                        <button class="tab-btn" id="tab-btn-echo" onclick="switchTab('echo')">Echo 🌌 <span id="echo-unread-badge" class="badge hidden">1</span></button>
                     </div>
                 </div>
             </header>
 
+            <!-- FREQUENCY TUNER (Inter-frequency navigation) -->
+            <div class="frequency-tuner-bar">
+                <span class="tuner-label">Tuning Dial:</span>
+                <div class="tuner-options">
+                    <button class="tuner-btn" id="tuner-burnt" onclick="tuneFrequency('Burnt Out')">🔥 Burnt Out</button>
+                    <button class="tuner-btn" id="tuner-broken" onclick="tuneFrequency('Broken')">💔 Broken</button>
+                    <button class="tuner-btn" id="tuner-lost" onclick="tuneFrequency('Lost')">🧭 Lost</button>
+                </div>
+            </div>
+
             <div class="dash-main-content">
-                <div id="panel-confessions" class="panel">
-                    <div class="post-creator">
-                        <h3>Express Safely</h3>
-                        <textarea id="post-text-input" placeholder="Type your honest, raw confession... Swahili, English, or Sheng is welcome."></textarea>
+                
+                <!-- 1. FEED PANEL -->
+                <div id="panel-feed" class="panel">
+                    
+                    <!-- COMPOSER - Lock/Unlock state is handled by JS depending on tuned frequency -->
+                    <div class="post-creator" id="creator-module">
+                        <div class="composer-header">
+                            <h3 id="composer-title">Broadcast to your frequency</h3>
+                            <span class="status-indicator" id="composer-lock-icon">🔓 Open</span>
+                        </div>
+                        <textarea id="post-text-input" placeholder="Type your unfiltered truth..."></textarea>
                         
                         <div id="filter-error-msg" class="error-strip hidden"></div>
                         
                         <div class="creator-footer">
                             <div class="media-mocks">
-                                <button class="media-btn" onclick="alert('Voice recording interface initialized securely.')">🎙️ Record Voice</button>
-                                <button class="media-btn" onclick="alert('Pixelated camera filter applied. Identity hidden.')">📹 Video Filter</button>
+                                <button class="media-btn" onclick="alert('Securing encrypted voice capture...')">🎙️ Voice Note</button>
+                                <button class="media-btn" onclick="alert('Activating pixelated dynamic lens...')">📹 Pixel Video</button>
                             </div>
-                            <button class="btn-publish" onclick="submitPost()">Post Confession</button>
+                            <button class="btn-publish" id="btn-submit-post" onclick="submitPost()">Broadcast</button>
                         </div>
-                    </div>
-
-                    <div class="feed-header-controls">
-                        <span>Active Frequency Feed:</span>
-                        <select id="feed-filter" onchange="renderFeed()">
-                            <option value="All">All Channels</option>
-                            <option value="Burnt Out">🔥 Burnt Out</option>
-                            <option value="Broken">💔 Broken</option>
-                            <option value="Lost">🧭 Lost</option>
-                        </select>
                     </div>
 
                     <div id="feed-list" class="posts-list"></div>
                 </div>
 
-                <div id="panel-questions" class="panel hidden">
-                    <div class="question-container">
-                        <span class="special-label">DAILY INTERACTIVE THOUGHT-VIBE</span>
-                        <h2 id="current-question">Have you ever compromised your core values to keep someone in your life?</h2>
+                <!-- 2. SPILL🌶️ PANEL -->
+                <div id="panel-spill" class="panel hidden">
+                    <div class="question-container" id="spill-question-box">
+                        <span class="special-label">DAILY SPILL • INTENTIONAL MOMENT</span>
+                        <h2 id="current-question">No Question Loaded</h2>
                         
-                        <div class="answers-grid">
-                            <button class="ans-opt" onclick="chooseQuestionAnswer('Absolutely Yes.')">Absolutely Yes.</button>
-                            <button class="ans-opt" onclick="chooseQuestionAnswer('Never.')">Never.</button>
-                            <button class="ans-opt" onclick="chooseQuestionAnswer('Still doing it right now.')">Still doing it right now.</button>
+                        <div class="answers-grid" id="spill-answers">
+                            <!-- Populated dynamically -->
                         </div>
 
                         <div id="explanation-box" class="hidden">
-                            <p class="exp-label">Describe your reason (System will automatically match compatible minds):</p>
-                            <textarea id="explanation-input" placeholder="Be unapologetically real..."></textarea>
-                            <button class="btn-publish" onclick="submitExplanation()">Post & Calculate Mindset Compatibility</button>
+                            <p class="exp-label">Describe your reason (System will automatically route compatible minds):</p>
+                            <textarea id="explanation-input" placeholder="Give context to your vibe..."></textarea>
+                            <button class="btn-publish" onclick="submitExplanation()">Publish Response</button>
                         </div>
                     </div>
                     
-                    <div class="public-explanations-header">Other Responses</div>
+                    <div class="public-explanations-header" id="spill-replies-title">Community Spills</div>
                     <div id="explanations-list"></div>
                 </div>
 
-                <div id="panel-chats" class="panel hidden">
+                <!-- 3. ECHO🌌 PANEL -->
+                <div id="panel-echo" class="panel hidden">
                     <div class="chats-screen-split">
                         <div class="chats-history-sidebar">
-                            <h3>Holds & Matches</h3>
-                            <div id="connections-list"></div>
+                            <h3>Conversations</h3>
+                            <div id="connections-list" class="connections-wrapper">
+                                <!-- Populated dynamically -->
+                            </div>
                         </div>
                         <div class="chats-view-window" id="active-chat-window">
-                            <div class="no-chat">Select a Match to start an anonymous connection.</div>
+                            <div class="no-chat">
+                                <div class="no-chat-icon">🌌</div>
+                                <p>Echo is your direct secure network.</p>
+                                <small>Replies to your confessions or spills appear here. No search, no noise.</small>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </section>
 
+        <!-- MPESA GATEWAY HOLD MODAL -->
         <div id="match-modal" class="modal-overlay hidden">
             <div class="match-popup">
                 <div class="match-glow-effect"></div>
-                <h2>Aura Match Generated!</h2>
-                <p>The system detected complimentary thoughts in your confession/explanation. Connection ready.</p>
+                <h2>Hold Signal Lost 📡</h2>
+                <p>Your 10-message free alignment block for this Echo conversation is fully consumed. Keep the vibe moving?</p>
                 
                 <div class="match-avatar-flow">
                     <div class="m-avatar">You</div>
-                    <div class="m-vs">⚡</div>
-                    <div class="m-avatar" id="matched-target-gender">Anon</div>
+                    <div class="m-vs">🔒</div>
+                    <div class="m-avatar">Match</div>
                 </div>
 
                 <div class="match-footer">
-                    <button class="btn-hold-pay" onclick="activateHold()">Hold Connection (50 KES)</button>
+                    <button class="btn-hold-pay" onclick="activateHold()">Activate 7-Day Hold (50 KES)</button>
                     <button class="btn-skip" onclick="closeMatchModal()">Close</button>
                 </div>
             </div>
@@ -211,7 +234,8 @@
 
     </div>
 
+    <!-- CENTRAL CONTROLLER -->
     <script src="script.js"></script>
 </body>
-    </html>
-                                                                
+                            </html>
+                            
