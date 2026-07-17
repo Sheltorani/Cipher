@@ -14,69 +14,44 @@ const simDb = {
         { id: 101, freq: "Lost", choice: "Strict Family Parameters", text: "I accepted a boring business desk job purely because my folks wanted to brag to the cousins at family gatherings. I am dying slow.", author: "Anon (♀)" }
     ],
     
-    // WHATSAPP-GRADE CHAT CHANNELS (Using Screenshot values)
+    // WHATSAPP-GRADE CHAT CHANNELS
     chats: [
         {
             id: "chat_tee",
-            partnerName: "Tee✨💕",
-            partnerAvatar: "https://images.unsplash.com/photo-1518818419601-72c8673f5852?auto=format&fit=crop&q=80&w=150", /* Soft ambient glow sky mimicking Tee's avatar */
+            partnerName: "Tee",
             partnerGender: "Female",
             partnerFreq: "Broken",
-            lastMessage: "Goodnight",
-            timestamp: "00:32",
-            unreadCount: 0,
-            contextSnippet: "Replied to your post on Westlands",
+            lastMessage: "I really get what you went through with that situation.",
+            timestamp: "3m ago",
+            contextSnippet: "Replied to your: 'Invested everything into building...'",
             messagesRemaining: 9,
             holdActive: false,
             messages: [
-                { sender: "them", body: "Most is from the parents then zinging since yeye ni software engineer he deals with those stuff", time: "00:10" },
-                { sender: "me", body: "Nice there's something I'm working on ikinishinda I might need his skills,,so it depends on you", time: "00:12" },
-                { sender: "them", body: "Mmmmh now i don't know it's upto him not me", time: "00:17", quote: { author: "You", text: "Nice there's something I'm working on..." } },
-                { sender: "me", body: "Ok", time: "00:22" },
-                { sender: "them", body: "Ok", time: "00:23", quote: { author: "Tee✨💕", text: "Mmmmh now i don't know..." } },
-                { sender: "me", body: "I'll sleep,,si wewe uko kesha😂😂", time: "00:24" },
-                { sender: "them", body: "Naah I'm tired", time: "00:28" },
-                { sender: "me", body: "Lala poa", time: "00:31" },
-                { sender: "them", body: "Goodnight", time: "00:32" }
+                { sender: "them", body: "I read your confession about building a dream house together. It hit dangerously close to home.", time: "10m ago" },
+                { sender: "me", body: "Appreciate you checking in. It was a massive shock to the system.", time: "8m ago" },
+                { sender: "them", body: "I really get what you went through with that situation.", time: "3m ago" }
             ]
         },
         {
-            id: "chat_expoze",
-            partnerName: "Expoze Teens",
-            partnerAvatar: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=150",
+            id: "chat_nerve",
+            partnerName: "Nerve_Signal",
             partnerGender: "Male",
             partnerFreq: "Burnt Out",
-            lastMessage: "Badooo",
-            timestamp: "12:09",
-            unreadCount: 3,
-            contextSnippet: "Global Frequency Broadcast",
+            lastMessage: "Let's check back in on this grind tomorrow.",
+            timestamp: "2h ago",
+            contextSnippet: "Replied to: 'Working 14-hour days on corporate...'",
             messagesRemaining: 5,
             holdActive: false,
             messages: [
-                { sender: "them", body: "We need to schedule the release program", time: "11:58" },
-                { sender: "them", body: "Badooo", time: "12:09" }
-            ]
-        },
-        {
-            id: "chat_prozy",
-            partnerName: "Prozy",
-            partnerAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150",
-            partnerGender: "Female",
-            partnerFreq: "Lost",
-            lastMessage: "Woishe 😂",
-            timestamp: "09:22",
-            unreadCount: 1,
-            contextSnippet: "Replied to: 'Limbo phase after varsity'",
-            messagesRemaining: 10,
-            holdActive: false,
-            messages: [
-                { sender: "them", body: "Woishe 😂", time: "09:22" }
+                { sender: "them", body: "Corporate finance in Westlands will empty your soul out, boss.", time: "3h ago" },
+                { sender: "me", body: "Seriously. Constant pressure, zero relief.", time: "2h ago" },
+                { sender: "them", body: "Let's check back in on this grind tomorrow.", time: "2h ago" }
             ]
         }
     ],
 
     // SYSTEM CHAT IDENTITIES
-    anonymousVibeTags: ["Oracle_Gold", "Golden_Echo", "Vibe_Seeker", "Saffron_Aura", "Amber_Stardust", "Silent_Pulse"]
+    anonymousVibeTags: ["Oracle_Gold", "Golden_Echo", "Vibe_Seeker", "Saffron_Aura", "Amber_Stardust", "Silent_Pulse", "Midnight_Mist"]
 };
 
 // Kenyan Names and traceable coordinates blocking rules
@@ -173,6 +148,7 @@ function tuneFrequency(targetFreq) {
     userAura.currentTunedFrequency = targetFreq;
     applyFrequencyTheme(targetFreq);
     
+    // Toggle composer locks if tuned out of native channels
     const comp = document.getElementById('creator-module');
     if (userAura.currentTunedFrequency !== userAura.nativeFrequency) {
         comp.classList.add('locked');
@@ -336,6 +312,7 @@ function renderSpillReplies() {
     });
 }
 
+// ECHO INSTANT ACTION ROUTER
 function openReplyFlow(sourceType, sourceId, authorName, originalText) {
     const replyText = prompt(`Initiate secure context-validated Echo to ${authorName}:`);
     if (!replyText) return;
@@ -346,18 +323,17 @@ function openReplyFlow(sourceType, sourceId, authorName, originalText) {
         return;
     }
 
+    // Generate high-end randomized alignment dynamic profile name
     const randTag = simDb.anonymousVibeTags[Math.floor(Math.random() * simDb.anonymousVibeTags.length)];
     const systemDesignatedIdentity = randTag + "_" + Math.floor(100 + Math.random() * 900);
 
     const newChat = {
         id: "chat_" + Date.now(),
         partnerName: systemDesignatedIdentity,
-        partnerAvatar: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&q=80&w=150",
         partnerGender: authorName.includes('♂') ? 'Male' : 'Female',
         partnerFreq: userAura.currentTunedFrequency,
         lastMessage: replyText,
         timestamp: "Just now",
-        unreadCount: 0,
         contextSnippet: `Replied to your ${sourceType}: "${originalText.substring(0, 32)}..."`,
         messagesRemaining: 9,
         holdActive: false,
@@ -377,7 +353,7 @@ function openReplyFlow(sourceType, sourceId, authorName, originalText) {
 }
 
 // =======================================================
-// WHATSAPP-STYLE REDESIGNED CHAT SYSTEMS
+// WHATSAPP-STYLE HIGH RESOLUTION ECHO CONTROLLER
 // =======================================================
 function renderEchoConversations() {
     const list = document.getElementById('connections-list');
@@ -385,23 +361,16 @@ function renderEchoConversations() {
 
     simDb.chats.forEach(chat => {
         const activeClass = (chat.id === activeChatId) ? 'active' : '';
-        const unreadBadgeHtml = chat.unreadCount > 0 ? `<div class="item-unread-badge">${chat.unreadCount}</div>` : '';
+        const lowerFreq = chat.partnerFreq.toLowerCase().replace(/\s+/g, '');
         
         list.innerHTML += `
             <div class="echo-connection-item ${activeClass}" onclick="openChat('${chat.id}')">
-                <div class="avatar-ring">
-                    <img class="avatar-img-placeholder" src="${chat.partnerAvatar}" alt="Profile Avatar">
+                <div class="echo-item-meta">
+                    <span class="echo-item-name">${chat.partnerName}</span>
+                    <span class="echo-item-badge ${lowerFreq}">${chat.partnerFreq}</span>
                 </div>
-                <div class="item-content-pane">
-                    <div class="item-header-row">
-                        <span class="item-title">${chat.partnerName}</span>
-                        <span class="item-time">${chat.timestamp}</span>
-                    </div>
-                    <div class="item-details-row">
-                        <span class="item-snippet">${chat.lastMessage}</span>
-                        ${unreadBadgeHtml}
-                    </div>
-                </div>
+                <div class="echo-item-snippet">${chat.lastMessage}</div>
+                <div class="echo-item-context">⚡ ${chat.contextSnippet}</div>
             </div>
         `;
     });
@@ -409,13 +378,9 @@ function renderEchoConversations() {
 
 function openChat(chatId) {
     activeChatId = chatId;
-    
-    // Clear unreads upon selection
-    const target = simDb.chats.find(c => c.id === chatId);
-    if(target) target.unreadCount = 0;
-
     renderEchoConversations();
 
+    const target = simDb.chats.find(c => c.id === chatId);
     const windowDiv = document.getElementById('active-chat-window');
 
     // Build vibe limit markers dynamically
@@ -425,61 +390,43 @@ function openChat(chatId) {
         limitGridHtml += `<div class="vibe-visual-tick ${activeClass}"></div>`;
     }
 
-    // Toggle Mobile display classes
-    document.querySelector('.echo-sidebar').classList.add('mobile-hide');
-    windowDiv.classList.add('mobile-show');
-
     windowDiv.innerHTML = `
         <div class="chat-window-header">
-            <div class="header-contact-info" onclick="closeChatMobile()">
-                <button class="back-arrow-mobile">←</button>
-                <div class="avatar-ring">
-                    <img class="avatar-img-placeholder" src="${target.partnerAvatar}">
-                </div>
-                <div class="active-user-details">
-                    <h4 style="font-size: 1rem; font-weight: 700; color: #fff;">${target.partnerName}</h4>
-                    <p style="font-size: 0.72rem; color: var(--gold-light);">${target.partnerFreq} Resonance</p>
-                </div>
+            <div class="active-user-details">
+                <h4>${target.partnerName}</h4>
+                <p>${target.partnerGender} • ${target.partnerFreq} Resonance</p>
+            </div>
+            
+            <div class="vibe-visual-limit">
+                <span class="vibe-visual-text">ALIGNMENT LEVEL:</span>
+                <div class="vibe-visual-grid">${limitGridHtml}</div>
             </div>
 
-            <div class="chat-header-actions">
-                <button class="chat-action-btn" onclick="alert('Initiating premium direct video feed protocol...')">📹</button>
-                <button class="chat-action-btn" onclick="alert('Connecting secure direct voice note stream...')">📞</button>
-                <button class="chat-action-btn" onclick="alert('Securing Chat Environment')">⋮</button>
+            <div class="chat-window-actions">
+                <button class="action-icon-btn" title="Secure Encrypted Audio Note" onclick="alert('Securing pristine sound capturing node...')">🎙️</button>
+                <button class="action-icon-btn" title="Secure Pixelated Stream Call" onclick="alert('Initiating zero-identity pixelated visual link...')">📹</button>
             </div>
+        </div>
+        
+        <div class="chat-origin-context-strip">
+            Origin: <strong>${target.contextSnippet}</strong>
         </div>
 
         <div class="chat-history-area" id="chat-scroller">
-            <!-- Messages are rendered dynamically below -->
+            <!-- Rendered below -->
         </div>
 
-        <div class="chat-input-wrapper">
-            <div class="input-pill-container">
-                <button class="pill-emoji-btn">😀</button>
-                <button class="pill-clip-btn" onclick="alert('Accessing Encrypted Local Storage files...')">📎</button>
-                <input type="text" id="echo-message-input" placeholder="Message" onkeydown="if(event.key === 'Enter') sendEchoMessage()">
-                <button class="pill-camera-btn" onclick="alert('Opening secure Camera capture...')">📷</button>
+        <div class="chat-input-row">
+            <div class="audio-video-send-shortcuts">
+                <button class="chat-shortcut-btn" title="Simulate Pixel Video Clip Attachment" onclick="alert('Loading private pixel frame buffer...')">🎞️</button>
+                <button class="chat-shortcut-btn" title="Simulate Voice Clip Attachment" onclick="alert('Routing safe microphone buffer...')">🎙️</button>
             </div>
-            <button class="mic-or-send-btn" id="voice-send-trigger" onclick="sendEchoMessage()">
-                🎙️
-            </button>
+            <input type="text" id="echo-message-input" placeholder="Type secure message..." onkeydown="if(event.key === 'Enter') sendEchoMessage()">
+            <button class="btn-send-message" onclick="sendEchoMessage()">Send</button>
         </div>
     `;
 
     renderActiveChatMessages(target);
-
-    // Watch for typing actions to change mic button to a gold submit button dynamically
-    const msgInp = document.getElementById('echo-message-input');
-    const trigger = document.getElementById('voice-send-trigger');
-    msgInp.addEventListener('input', () => {
-        if(msgInp.value.trim().length > 0) {
-            trigger.innerHTML = "✈️";
-            trigger.style.background = "var(--gold-metallic)";
-        } else {
-            trigger.innerHTML = "🎙️";
-            trigger.style.background = "#a8583b";
-        }
-    });
 }
 
 function renderActiveChatMessages(chat) {
@@ -488,20 +435,98 @@ function renderActiveChatMessages(chat) {
 
     chat.messages.forEach(m => {
         const rowClass = (m.sender === 'me') ? 'sent' : 'received';
-        const tickHtml = (m.sender === 'me') ? `<span class="double-tick">✓✓</span>` : '';
-        
-        // Quote bubble condition checking
-        let quoteHtml = '';
-        if (m.quote) {
-            quoteHtml = `
-                <div class="bubble-quote-wrap">
-                    <div class="quote-author">${m.quote.author}</div>
-                    <div class="quote-text">${m.quote.text}</div>
-                </div>
-            `;
-        }
-
         box.innerHTML += `
             <div class="chat-bubble-row ${rowClass}">
-                ${quoteHtml}
-                <div class="bubble-text-content">${m.body}</div
+                <div class="bubble-text">${m.body}</div>
+                <div class="bubble-time">${m.time}</div>
+            </div>
+        `;
+    });
+    
+    // WhatsApp native automated vertical alignments
+    box.scrollTop = box.scrollHeight;
+}
+
+function sendEchoMessage() {
+    const chat = simDb.chats.find(c => c.id === activeChatId);
+    const input = document.getElementById('echo-message-input');
+    const val = input.value;
+
+    if (!val.trim()) return;
+
+    const violation = checkTextAnonymity(val);
+    if (violation) {
+        alert(violation);
+        return;
+    }
+
+    if (chat.messagesRemaining <= 0 && !chat.holdActive) {
+        document.getElementById('match-modal').classList.remove('hidden');
+        return;
+    }
+
+    if (!chat.holdActive) {
+        chat.messagesRemaining--;
+    }
+
+    chat.messages.push({
+        sender: "me",
+        body: val,
+        time: "Just now"
+    });
+
+    chat.lastMessage = val;
+    input.value = '';
+
+    openChat(chat.id);
+
+    // Mock dynamic replies 
+    setTimeout(() => {
+        if (chat.messages[chat.messages.length - 1].sender === "me") {
+            chat.messages.push({
+                sender: "them",
+                body: "I highly appreciate your perspective on this, let us hold alignment here.",
+                time: "Just now"
+            });
+            chat.lastMessage = "I highly appreciate your perspective...";
+            if (activeChatId === chat.id) {
+                openChat(chat.id);
+            }
+        }
+    }, 2000);
+}
+
+// MPESA GATEWAY OPERATIONS
+function activateHold() {
+    alert("STK M-Pesa push initiated on your registered number for KES 50. Key in your secure PIN on your device.");
+    const chat = simDb.chats.find(c => c.id === activeChatId);
+    if (chat) {
+        chat.holdActive = true;
+        chat.messagesRemaining = 10; 
+    }
+    closeMatchModal();
+    openChat(activeChatId);
+}
+
+function closeMatchModal() {
+    document.getElementById('match-modal').classList.add('hidden');
+}
+
+// NAVIGATION TABS SWITCHBOARD
+function switchTab(tabId) {
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(panel => panel.classList.add('hidden'));
+
+    document.getElementById(`tab-btn-${tabId}`).classList.add('active');
+    document.getElementById(`panel-${tabId}`).classList.remove('hidden');
+
+    if (tabId === 'feed') {
+        renderFeed();
+    } else if (tabId === 'spill') {
+        renderSpillQuestion();
+    } else if (tabId === 'echo') {
+        renderEchoConversations();
+        document.getElementById('echo-unread-badge').classList.add('hidden');
+    }
+        }
+            
