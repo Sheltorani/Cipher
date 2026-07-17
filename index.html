@@ -1,37 +1,258 @@
-<!-- 3. REDESIGNED ULTRA-PREMIUM ECHO ROOMS (WHATSAPP DUAL-FLOW) -->
-<div id="panel-echo" class="panel hidden">
-    <div class="echo-system-frame">
-        
-        <!-- LEFT PANEL: CHAT LIST VIEW -->
-        <div class="echo-sidebar">
-            <div class="echo-sidebar-header">
-                <h3>Echo Rooms</h3>
-                <span class="gold-stamp-aside" style="font-size: 0.65rem;">⚜️ Sheltorani Secure</span>
-            </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cipher — Powered by Sheltorani</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-premium">
 
-            <!-- WhatsApp Search Bar Interface -->
-            <div class="search-bar-container">
-                <div class="search-bar-inner">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" placeholder="Search conversations..." onkeyup="alert('Searching cryptography database...')">
+    <!-- THE SHELTORANI CINEMATIC INTRO -->
+    <div id="cinematic-intro" class="intro-overlay">
+        <div class="intro-content">
+            <div class="luxury-glow"></div>
+            <p class="sheltorani-present">SHELTORANI PRESENTS</p>
+            <div class="cipher-logo-ring">
+                <span class="gold-pulse-ring"></span>
+                <h1 class="master-logo">CIPHER</h1>
+            </div>
+            <p class="intro-tagline">Truth requires no identity.</p>
+            <div class="gold-dust-loader"></div>
+        </div>
+    </div>
+
+    <!-- MAIN SYSTEM CONTAINER -->
+    <div id="app-container">
+
+        <!-- LANDING VIEW -->
+        <section id="landing-page" class="view-section">
+            <header class="navbar">
+                <div class="nav-container">
+                    <div class="brand">
+                        <span class="logo-text">cipher</span>
+                        <span class="sheltorani-tag">BY SHELTORANI</span>
+                    </div>
+                    <button class="btn-signin" onclick="navigateTo('auth-page')">Enter Platform</button>
+                </div>
+            </header>
+
+            <main class="hero-container">
+                <p class="brand-heritage">A SHELTORANI DIGITAL EXPERIENCE</p>
+                <h1 class="main-title">TUNED TO YOUR<br><span class="gold-gradient-text">TRUE FREQUENCY.</span></h1>
+                <p class="hero-subtitle">
+                    Raw confessions, sensitive Q&As, and direct Echoes. No social noise, no endless tracking. Simply authentic human connection wrapped in a golden shroud of anonymity.
+                </p>
+                
+                <div class="hero-actions">
+                    <button class="btn-cta-gold" onclick="navigateTo('auth-page')">Claim Your Aura</button>
+                </div>
+
+                <div class="footer-branding-stamp">
+                    <p class="gold-stamp-text">⚜️ POWERED BY SHELTORANI ⚜️</p>
+                </div>
+            </main>
+        </section>
+
+        <!-- AUTH/OTP GATEWAY -->
+        <section id="auth-page" class="view-section hidden flex-center">
+            <div class="glass-card">
+                <button class="btn-back" onclick="navigateTo('landing-page')">← Back</button>
+                <h2>Gatekeeper Protocol</h2>
+                <p class="card-desc">Cipher uses localized cryptographic verification to prevent bot interference. Your mobile identity remains absolutely unlinked and secure.</p>
+                
+                <div id="phone-input-group">
+                    <div class="input-wrapper">
+                        <span class="prefix">+254</span>
+                        <input type="tel" id="phone-number" placeholder="712345678" maxlength="9">
+                    </div>
+                    <button class="btn-submit-gold" onclick="sendOTP()">Request Entrance Code</button>
+                </div>
+
+                <div id="otp-input-group" class="hidden">
+                    <p class="status-msg">Code dispatched to your device</p>
+                    <input type="text" id="otp-code" placeholder="• • • • • •" maxlength="6" class="otp-box">
+                    <button class="btn-submit-gold" onclick="verifyOTP()">Verify Alignment</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- AURA ALIGNMENT (ONBOARDING) -->
+        <section id="onboarding-page" class="view-section hidden flex-center">
+            <div class="glass-card wide">
+                <div class="sheltorani-signature-header">
+                    <span class="gold-crown">⚜️</span>
+                    <span class="brand-signature-text">SHELTORANI</span>
+                </div>
+                <h2>Aura Initialization</h2>
+                <p class="card-desc">Select your permanent resonance. This locks your broadcasting permissions to your native frequency environment.</p>
+                
+                <div class="onboard-section">
+                    <label class="section-label">Aura Profile Signature</label>
+                    <div class="gender-grid">
+                        <button class="gender-btn" id="gender-male" onclick="selectGender('Male')">♂ Masculine</button>
+                        <button class="gender-btn" id="gender-female" onclick="selectGender('Female')">♀ Feminine</button>
+                    </div>
+                </div>
+
+                <div class="onboard-section">
+                    <label class="section-label">Select Your Resonance</label>
+                    <p class="sub-alert">⚠️ You can navigate all frequencies later, but can only post natively here.</p>
+                    <div class="freq-grid">
+                        <div class="freq-btn select-burnt" id="freq-burnt" onclick="selectFrequency('Burnt Out')">
+                            <h3>🔥 Burnt Out</h3>
+                            <p>Exhaustion, grinding, late-night burnout.</p>
+                        </div>
+                        <div class="freq-btn select-broken" id="freq-broken" onclick="selectFrequency('Broken')">
+                            <h3>💔 Broken</h3>
+                            <p>Muted, healing, quiet introspections.</p>
+                        </div>
+                        <div class="freq-btn select-lost" id="freq-lost" onclick="selectFrequency('Lost')">
+                            <h3>🧭 Lost</h3>
+                            <p>Wandering, searching, seeking paths.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-submit-gold" id="btn-complete-onboarding" disabled onclick="completeOnboarding()">Sync Aura</button>
+            </div>
+        </section>
+
+        <!-- APPLICATION DASHBOARD -->
+        <section id="dashboard-page" class="view-section hidden">
+            <header class="dash-navbar">
+                <div class="dash-nav-container">
+                    <div class="brand">
+                        <span class="logo-text">cipher</span>
+                        <span id="user-freq-tag" class="freq-indicator">Native</span>
+                    </div>
+
+                    <!-- MODERN NAVIGATION TAB SELECTORS -->
+                    <div class="dash-tabs">
+                        <button class="tab-btn active" id="tab-btn-feed" onclick="switchTab('feed')">Broadcasts</button>
+                        <button class="tab-btn" id="tab-btn-spill" onclick="switchTab('spill')">Spills 🌶️</button>
+                        <button class="tab-btn" id="tab-btn-echo" onclick="switchTab('echo')">Echo Rooms 🌌 <span id="echo-unread-badge" class="badge">1</span></button>
+                    </div>
+
+                    <div class="nav-branding-aside">
+                        <span class="gold-stamp-aside">⚜️ Sheltorani</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- FREQUENCY TUNING NAVIGATION (DIAL) -->
+            <div class="frequency-tuner-bar">
+                <span class="tuner-label">Tuning Dial:</span>
+                <div class="tuner-options">
+                    <button class="tuner-btn" id="tuner-burnt" onclick="tuneFrequency('Burnt Out')">🔥 Burnt Out</button>
+                    <button class="tuner-btn" id="tuner-broken" onclick="tuneFrequency('Broken')">💔 Broken</button>
+                    <button class="tuner-btn" id="tuner-lost" onclick="tuneFrequency('Lost')">🧭 Lost</button>
                 </div>
             </div>
 
-            <div id="connections-list" class="echo-conversations-list">
-                <!-- Programmatically rendered -->
-            </div>
-        </div>
+            <div class="dash-main-content">
+                
+                <!-- 1. BROADCAST PANEL -->
+                <div id="panel-feed" class="panel">
+                    <!-- COMPOSER -->
+                    <div class="post-creator" id="creator-module">
+                        <div class="composer-header">
+                            <h3 id="composer-title">Broadcast natively to your frequency</h3>
+                            <span class="status-indicator" id="composer-lock-icon">🔓 Open</span>
+                        </div>
+                        <textarea id="post-text-input" placeholder="Type your unfiltered truth here anonymously..."></textarea>
+                        
+                        <div id="filter-error-msg" class="error-strip hidden"></div>
+                        
+                        <div class="creator-footer">
+                            <div class="media-mocks">
+                                <button class="media-btn" onclick="alert('Securing microphone capture...')">🎙️ Voice Note</button>
+                                <button class="media-btn" onclick="alert('Preparing pixelated privacy filter...')">📹 Pixel Video</button>
+                            </div>
+                            <button class="btn-publish-gold" id="btn-submit-post" onclick="submitPost()">Broadcast</button>
+                        </div>
+                    </div>
 
-        <!-- RIGHT PANEL: INTERACTIVE VIEWPORT -->
-        <div class="echo-chat-window" id="active-chat-window">
-            <!-- Default landing view when no conversation is actively pulled -->
-            <div class="empty-echo-state">
-                <div class="gold-brand-crest">⚜️</div>
-                <h3>Secure Echo Network</h3>
-                <p>Select a verified contact on the left to activate high-end end-to-end alignment.</p>
-                <span class="sheltorani-fine-print">Powered by Sheltorani</span>
+                    <div id="feed-list" class="posts-list"></div>
+                </div>
+
+                <!-- 2. SPILLS PANEL -->
+                <div id="panel-spill" class="panel hidden">
+                    <div class="question-container" id="spill-question-box">
+                        <span class="special-label">⚜️ SHELTORANI DAILY SPILL</span>
+                        <h2 id="current-question">Retrieving daily truth question...</h2>
+                        
+                        <div class="answers-grid" id="spill-answers"></div>
+
+                        <div id="explanation-box" class="hidden">
+                            <p class="exp-label">Add your personal perspective:</p>
+                            <textarea id="explanation-input" placeholder="Provide background or explain your chosen stance..."></textarea>
+                            <button class="btn-publish-gold" onclick="submitExplanation()">Publish Response</button>
+                        </div>
+                    </div>
+                    
+                    <div class="public-explanations-header" id="spill-replies-title">Community Spills</div>
+                    <div id="explanations-list"></div>
+                </div>
+
+                <!-- 3. NEW ELITE ECHO ROOMS (WHATSAPP REDESIGN) -->
+                <div id="panel-echo" class="panel hidden">
+                    <div class="echo-system-frame">
+                        
+                        <!-- LEFT PANEL: CHAT LIST (Clean & Professional) -->
+                        <div class="echo-sidebar">
+                            <div class="echo-sidebar-header">
+                                <h3>Conversations</h3>
+                                <span class="active-count-stamp">Active Connections</span>
+                            </div>
+                            <div id="connections-list" class="echo-conversations-list">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+
+                        <!-- RIGHT PANEL: CONVERSATION AREA -->
+                        <div class="echo-chat-window" id="active-chat-window">
+                            <!-- Default state before user chooses a conversation -->
+                            <div class="empty-echo-state">
+                                <div class="gold-brand-crest">⚜️</div>
+                                <h3>Secure Echo Network</h3>
+                                <p>Select an alignment on the left pane to engage. Communication requires original, context-driven validation.</p>
+                                <span class="sheltorani-fine-print">Encrypted & Powered by Sheltorani</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MPESA HOLD PORTAL MODAL -->
+        <div id="match-modal" class="modal-overlay hidden">
+            <div class="match-popup">
+                <div class="match-gold-crest">⚜️</div>
+                <h2>Echo Limit Reached</h2>
+                <p>Your complimentary 10-message interactive cycle for this conversation is completed. To secure a permanent private space, lock in a 7-Day Hold.</p>
+                
+                <div class="modal-pricing-box">
+                    <span class="price-desc">7-Day Continuous Tunnel</span>
+                    <span class="price-amount">KES 50.00</span>
+                </div>
+
+                <div class="match-footer">
+                    <button class="btn-hold-pay" onclick="activateHold()">Pay with M-Pesa</button>
+                    <button class="btn-skip" onclick="closeMatchModal()">Maybe Later</button>
+                </div>
             </div>
         </div>
 
     </div>
-</div>
+
+    <!-- CODE CONTROLLER -->
+    <script src="script.js"></script>
+</body>
+    </html>
+                        
